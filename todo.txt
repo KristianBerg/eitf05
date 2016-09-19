@@ -1,0 +1,2 @@
+- download wampserver and use it to host minimal php document
+- create self-signed ssl certificate
