@@ -116,6 +116,12 @@ class Database {
 		return count($result) == 1;
 	}
 
+	public function usernameExists($username){
+		$sql = "select Username from logins where Username = ?";
+		$result = $this->executeQuery($sql, array($username));
+		return count($result) == 1;
+	}
+
 	public function registerUser($userId, $password, $address){
 		$sql = "insert into logins values(?, ?, ?, ?)";
 		$result = $this->executeUpdate($sql, array($userId, $address, $password, "salt"));
