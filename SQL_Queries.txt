@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS
   Products;
 DROP TABLE IF EXISTS
   Logins;
+
 CREATE TABLE Products(
   Prod_id INT,
   Prod_name VARCHAR(255),
@@ -9,8 +10,10 @@ CREATE TABLE Products(
   Description VARCHAR(255),
   PRIMARY KEY(Prod_id)
 );
+
 CREATE TABLE Logins(
   Username VARCHAR(64),
+  Useradress VARCHAR(255),
   Pass_hash VARCHAR(64),
   Salt VARCHAR(8),
   PRIMARY KEY(Username)
