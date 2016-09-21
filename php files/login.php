@@ -14,14 +14,13 @@
 	$password = $_REQUEST['password'];
 	if (!$db->userExists($username, $password)) {
 		$db->closeConnection();
-		$_SESSION['noSuchUser'] = true;
-		header("Location: signin.php"); //Ändra
+		header("Location: signin.php?noSuchUser=" . true); //Ändra
 		exit();
 	}
 	$db->closeConnection();
 
 	session_start();
-	
+
 	$_SESSION['db'] = $db;
 	$_SESSION['username'] = $username;
 	header("Location: storepage.php"); //Ändra
