@@ -6,22 +6,28 @@
 	$db = new Database($host, $userName, $password, $database);
 	$db->openConnection();
 	if (!$db->isConnected()) {
-		header("Location: signin.php");
+		header("Location: index.php");
 		exit();
 	}
-
+		
+	if(isset($_REQUEST['register'])) {
+		$db->closeConnection();
+		$_SESSION['db'] = $db;
+		header("Location: register.php");
+		exit();
+	}
+	
 	$username = $_REQUEST['username'];
 	$password = $_REQUEST['password'];
 	if (!$db->userExists($username, $password)) {
 		$db->closeConnection();
-		header("Location: signin.php?noSuchUser=" . true); //Ändra
+		header("Location: index.php?noSuchUser=" . true);
 		exit();
-	}
+	}	
 	$db->closeConnection();
-
-	session_start();
-
+	
 	$_SESSION['db'] = $db;
 	$_SESSION['username'] = $username;
-	header("Location: storepage.php"); //Ändra
+	header("Location: storepage.php");
+	exit();
 ?>

@@ -11,7 +11,7 @@
 	$_SESSION['lastActivity'] = time(); //Update last activity time stamp
 	
 	if( !isset($_SESSION["username"]) ){	//kollar om man verkligen varit i en session innan
-		header("location: signin.php?timeout=" . true);
+		header("location: index.php?timeout=" . true);
 		exit(); //så att php koden inte går att bypassa
 	}
 	$db = $_SESSION['db'];
