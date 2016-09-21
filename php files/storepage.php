@@ -1,11 +1,15 @@
 <?php
 	require_once('database.inc.php');
-	
+
 	session_start();
+	if( !isset($_SESSION["username"]) ){	//kollar om man verkligen varit i en session innan
+    header("location: signin.php");
+    exit(); //så att php koden inte går att bypassa
+}
 	$db = $_SESSION['db'];
 	$username = $_SESSION['username'];
 	$db->openConnection();
-	
+
 	$db->closeConnection();
 ?>
 
@@ -14,7 +18,7 @@
 <body>
 	<h2> Welcome to the store! (TM) </h2>
 	<h4> Available items: </h4>
-	
+
 	<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/2000px-Maple_Leaf.svg.png" alt="dank leaf" style="width:200; height:200;"> <br>
 	<form action = "storepage.php" method = "post">
 	Number of cannadis: <input type="text" name="noItem1">
