@@ -7,7 +7,9 @@
 	  Username: <input type="text" size="20" name="username"><br>
 	  Password: <input type="text" size="20" name="password"><br>
 	  <input type="submit" value="login">
-    <input type="submit" value="Register">
+	</form>
+	<form action="signup.php" method="post">
+		<input type="submit" value="Register">
 	</form>
 	<?php
 		session_start();
