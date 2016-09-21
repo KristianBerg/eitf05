@@ -4,5 +4,6 @@
   $username = $_POST['username'];
   $password = $_POST['password'];
   $home_address = $_POST['home_address'];
-  $db->update
+  $db->registerUser($username, $password, $home_address);
+  header("signin.php?userCreated=" . true);
 ?>
