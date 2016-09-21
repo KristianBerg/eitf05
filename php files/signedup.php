@@ -1,1 +1,8 @@
-new user <?php echo $_POST["username"];?> with password <?php echo $_POST["password"];?>
+<?php
+  session_start();
+  $db = $_SESSION['db'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $home_address = $_POST['home_address'];
+  $db->update
+?>
