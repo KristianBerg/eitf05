@@ -10,7 +10,7 @@
 		<input type="submit" value="Register">
 	</form>
 	<?php 
-		require_once(database.inc.php);
+		require_once('database.inc.php');
 		
 		session_start();
 		
@@ -26,8 +26,14 @@
 			if(!$db->usernameExists($username)) {
 				if($password === $password2) {
 					$db->registerUser($username, $password, $home_address);
+					$db->closeConnection();
+					header("Location: index.php?registered=" . true);
+					exit();
 				}
-			}
+				echo "Passwords not matching.";	
+			} else {
+				echo "Username already taken.";
+			}	
 			$db->closeConnection();
 		}
 	?>

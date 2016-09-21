@@ -15,8 +15,8 @@
 			echo "No such user was found.";
 		} else if(isset($_GET['timeout']) and $_GET['timeout'] == true) {
 			echo "Session timed out...";
-		} else if(isset($_POST['username'])) {
-			echo "New user " . $_POST['username'] . " registered.";
+		} else if(isset($_GET['registered']) and $_GET['registered'] == true) {
+			echo "New user registered.";
 		}
 	//echo $_SESSION["noSuchUser"];
 	?>
