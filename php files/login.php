@@ -20,6 +20,8 @@
 	}
 	$db->closeConnection();
 
+	session_start();
+	
 	$_SESSION['db'] = $db;
 	$_SESSION['username'] = $username;
 	header("Location: storepage.php"); //Ändra
