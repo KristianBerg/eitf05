@@ -1,5 +1,16 @@
+<?php
+	require_once('database.inc.php');
+	
+	session_start();
+	$db = $_SESSION['db'];
+	$username = $_SESSION['username'];
+	$db->openConnection();
+	
+	$db->closeConnection();
+?>
+
 <html>
-<head></head>
+<head><?php echo "<h3>" . $username . "</h3>" ?></head>
 <body>
 	<h2> Welcome to the store! (TM) </h2>
 	<h4> Available items: </h4>
