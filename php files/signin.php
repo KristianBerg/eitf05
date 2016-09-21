@@ -14,6 +14,9 @@
 		if(isset($_SESSION['noSuchUser']) && $_SESSION['noSuchUser'] === true){
 			echo "No such user was found.";
 			$_SESSION['noSuchUser'] = false;
+		} else if(isset($_GET['timeout']) and $_GET['timeout'] == true) {
+			echo "Session timed out...";
+			session_unset();
 		}
 	//echo $_SESSION["noSuchUser"];
 	?>

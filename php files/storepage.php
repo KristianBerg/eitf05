@@ -2,14 +2,22 @@
 	require_once('database.inc.php');
 
 	session_start();
+	
+	if (isset($_SESSION['lastActivity']) && (time() - $_SESSION['lastActivity'] > 3)) {
+		// last request was more than X seconds ago
+		session_unset();     // unset $_SESSION variable for the run-time 
+		session_destroy();   // destroy session data in storage
+	}
+	$_SESSION['lastActivity'] = time(); //Update last activity time stamp
+	
 	if( !isset($_SESSION["username"]) ){	//kollar om man verkligen varit i en session innan
-    header("location: signin.php");
-    exit(); //så att php koden inte går att bypassa
-}
+		header("location: signin.php?timeout=" . true);
+		exit(); //så att php koden inte går att bypassa
+	}
 	$db = $_SESSION['db'];
 	$username = $_SESSION['username'];
 	$db->openConnection();
-
+	
 	$db->closeConnection();
 ?>
 
