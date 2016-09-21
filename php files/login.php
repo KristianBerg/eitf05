@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require_once('database.inc.php');
 	require_once("mysql_connect_data.inc.php");
 
@@ -13,7 +14,8 @@
 	$password = $_REQUEST['password'];
 	if (!$db->userExists($username, $password)) {
 		$db->closeConnection();
-		header("Location: noSuchUser.html"); //Ändra
+		$_SESSION['noSuchUser'] = true;
+		header("Location: signin.php"); //Ändra
 		exit();
 	}
 	$db->closeConnection();
