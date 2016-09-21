@@ -117,9 +117,9 @@ class Database {
 	}
 
 	public function registerUser($userId, $password, $address){
-		$sql = "insert into logins ?";
-		$result = $this->executeUpdate($sql, array($userId, $password, $address))M
-		return count($result) == 1;
+		$sql = "insert into logins values(?, ?, ?, ?)";
+		$result = $this->executeUpdate($sql, array($userId, $address, $password, "salt"));
+		return count($result);
 	}
 
 	/*
