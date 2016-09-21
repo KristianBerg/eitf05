@@ -9,18 +9,5 @@
 	  <input type="submit" value="login">
     <input type="submit" value="Register">
 	</form>
-
-  <?php
-    if(isset($_SESSION['counter'])) {
-      echo $_SESSION['counter'];
-      $_SESSION['counter']++;
-      if($_SESSION >= 3) {
-        echo "BANNED!";
-      } else {
-        echo "Invalid username or password number " . $_SESSION['counter'];
-      }
-    }
-  ?>
-
 </body>
 </html>
