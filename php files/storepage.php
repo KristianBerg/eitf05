@@ -25,7 +25,7 @@
 <head><?php echo "<h3>" . $username . "</h3>" ?></head>
 <body>
 	<h2> Welcome to the store! (TM) </h2>
-	<?php if(isset($_GET['itemsAdded'])){ echo $_GET['itemsAdded'] . " items added to cart"; } ?>
+	<?php if(isset($_GET['itemsAdded'])){ echo "<p>" . $_GET['itemsAdded'] . " items added to cart </p>"; } ?>
 	<h4> Available items: </h4>
 	<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/2000px-Maple_Leaf.svg.png" alt="dank leaf" style="width:200; height:200;"> <br>
 	<form action = "shoppingcart.php" method = "post">
@@ -35,6 +35,7 @@
 	<form action = "shoppingcart.php" method = "post">
 	Number of lines: <input type="text" name="noItem2">
 	<input type = "submit"> <br> <br>
+	<a href = "checkout.php"> Go to checkout </a> <br>
 	<iframe src="//giphy.com/embed/xTiTnHXbRoaZ1B1Mo8" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 </body>
 </html>
