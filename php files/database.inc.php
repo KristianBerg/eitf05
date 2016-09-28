@@ -111,23 +111,39 @@ class Database {
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId, $password) {
-		$sql = "select Username from logins where Username = ? and Pass_hash = ?";
+		$sql = "SELECT Username FROM logins WHERE Username = ? AND Pass_hash = ?";
 		$result = $this->executeQuery($sql, array($userId, $password));
 		return count($result) == 1;
 	}
 
-	public function usernameExists($username){
-		$sql = "select Username from logins where Username = ?";
+	public function usernameExists($username) {
+		$sql = "SELECT Username FROM logins WHERE Username = ?";
 		$result = $this->executeQuery($sql, array($username));
 		return count($result) == 1;
 	}
 
-	public function registerUser($userId, $password, $address){
-		$sql = "insert into logins values(?, ?, ?, ?)";
+	public function registerUser($userId, $password, $address ){
+		$sql = "INSERT INTO logins VALUES(?, ?, ?, ?)";
 		$result = $this->executeUpdate($sql, array($userId, $address, $password, "salt"));
 		return count($result);
 	}
 
+	public function addToCart($userId, $item, $quantity) {
+		$sql = "INSERT INTO carts VALUES((SELECT Username FROM logins WHERE Username = ?), (SELECT Prod_id FROM products WHERE Prod_id = ?), ?)
+			ON DUPLICATE KEY UPDATE Quantity = ?";
+		$this->executeUpdate($sql, array($userId, $item, $quantity, $quantity));
+	}
+
+	public function getCart($userId) {
+		$sql = "SELECT Prod_id, Quantity FROM carts WHERE Username = ?";
+		$dbResult = $this->executeQuery($sql, array($userId));
+		$result = [];
+		foreach($dbResult as $row) {
+			//array_push($result, $row['Quantity']);
+			$result[$row['Prod_id']] = $row['Quantity'];
+		}
+		return $result;
+	}
 	/*
 	 * *** Add functions ***
 	 */

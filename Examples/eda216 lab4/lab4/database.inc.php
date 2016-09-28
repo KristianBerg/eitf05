@@ -14,7 +14,7 @@ class Database {
 	private $password;
 	private $database;
 	private $conn;
-	
+
 	/**
 	 * Constructs a database object for the specified user.
 	 */
@@ -24,18 +24,18 @@ class Database {
 		$this->password = $password;
 		$this->database = $database;
 	}
-	
-	/** 
+
+	/**
 	 * Opens a connection to the database, using the earlier specified user
 	 * name and password.
 	 *
-	 * @return true if the connection succeeded, false if the connection 
-	 * couldn't be opened or the supplied user name and password were not 
+	 * @return true if the connection succeeded, false if the connection
+	 * couldn't be opened or the supplied user name and password were not
 	 * recognized.
 	 */
 	public function openConnection() {
 		try {
-			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database", 
+			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database",
 					$this->userName,  $this->password);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
@@ -46,7 +46,7 @@ class Database {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Closes the connection to the database.
 	 */
@@ -63,12 +63,12 @@ class Database {
 	public function isConnected() {
 		return isset($this->conn);
 	}
-	
+
 	/**
 	 * Execute a database query (select).
 	 *
 	 * @param $query The query string (SQL), with ? placeholders for parameters
-	 * @param $param Array with parameters 
+	 * @param $param Array with parameters
 	 * @return The result set
 	 */
 	private function executeQuery($query, $param = null) {
@@ -82,12 +82,12 @@ class Database {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Execute a database update (insert/delete/update).
 	 *
 	 * @param $query The query string (SQL), with ? placeholders for parameters
-	 * @param $param Array with parameters 
+	 * @param $param Array with parameters
 	 * @return The number of affected rows
 	 */
 	private function executeUpdate($query, $param = null) {
@@ -102,18 +102,18 @@ class Database {
 		}
 		return $rows;
 	}
-	
+
 	/**
 	 * Check if a user with the specified user id exists in the database.
 	 * Queries the Users database table.
 	 *
-	 * @param userId The user id 
+	 * @param userId The user id
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId) {
 		$sql = "select userName from users where userName = ?";
 		$result = $this->executeQuery($sql, array($userId));
-		return count($result) == 1; 
+		return count($result) == 1;
 	}
 
 	/*
@@ -122,7 +122,7 @@ class Database {
 	 public function getMovieNames(){
 		 $sql = "select movieName FROM movies";
 		 $dbresult = $this->executeQuery($sql);
-		 
+
 		 $result = [];
 		 foreach($dbresult as $row){
 			 array_push($result, $row['movieName']);
@@ -132,7 +132,7 @@ class Database {
 	 public function getMovieDates($movieName){
 		 $sql = "select pDate FROM performances WHERE movieName = ?";
 		 $dbresult = $this->executeQuery($sql, array($movieName));
-		 
+
 		 $result = [];
 		 foreach($dbresult as $row){
 			 array_push($result, $row['pDate']);
@@ -170,22 +170,22 @@ class Database {
 	 public function reserveTicket($movieName, $pDate, $userId){
 		try{
 			$this->conn->beginTransaction();
-			
+
 			$sql = "INSERT INTO reservations values(NULL,?,?,?)";
-			
+
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$stmt = $this->conn->prepare($sql);
 			$stmt->execute(array($movieName, $userId, $pDate));
-			
+
 		} catch(PDOException $e){
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
 			die($error);
 		}
-		
-		$sql = "UPDATE performances SET availabelSeats = availabelSeats - 1 where movieName = ? and pdate = ?";	
+
+		$sql = "UPDATE performances SET availabelSeats = availabelSeats - 1 where movieName = ? and pdate = ?";
 		$this->executeUpdate($sql, array($movieName, $pDate));
 		$seatsLeft = $this->getAvailabelSeats($movieName, $pDate);
-		if($seatsLeft < 0){	
+		if($seatsLeft < 0){
 				$this->conn->rollBack();
 				return -1;
 			}

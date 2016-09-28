@@ -9,23 +9,32 @@
 		header("Location: index.php");
 		exit();
 	}
-		
+
 	if(isset($_REQUEST['register'])) {
 		$db->closeConnection();
 		$_SESSION['db'] = $db;
 		header("Location: register.php");
 		exit();
 	}
-	
+
 	$username = $_REQUEST['username'];
 	$password = $_REQUEST['password'];
 	if (!$db->userExists($username, $password)) {
 		$db->closeConnection();
 		header("Location: index.php?noSuchUser=" . true);
 		exit();
-	}	
+	}
+	$cart = $db->getCart($username);
 	$db->closeConnection();
-	
+	$index = 0;
+	while($index < 1) {
+		if(!empty($cart[$index])) {
+			$_SESSION['noItem' . $index] = $cart[$index];
+		} else {
+			$_SESSION['noItem' . $index] = 0;
+		}
+		$index = $index+1;
+	}
 	$_SESSION['db'] = $db;
 	$_SESSION['username'] = $username;
 	header("Location: storepage.php");

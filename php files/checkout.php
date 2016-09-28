@@ -5,8 +5,8 @@
     <h2> Checkout </h2>
     <?php
       session_start();
-      echo "<p>No item 1: " . $_SESSION['noItem1'] . "</p>";
-      echo "<p>No item 2: " . $_SESSION['noItem2'] . "</p>";
+      echo "<p>No item 1: " . $_SESSION['noItem0'] . "</p>";
+      //echo "<p>No item 2: " . $_SESSION['noItem2'] . "</p>";
     ?>
     <form action = 'storepage.php' method = 'post'>
     <input type = 'submit' name = 'back' value = 'Back'> <br>
