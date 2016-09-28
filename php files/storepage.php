@@ -20,23 +20,23 @@
 <html>
 <head><?php echo "<h3>" . $username . "</h3>" ?></head>
 <body>
-	<?php
-		if(array_key_exists("noItem" . 0 , $_SESSION)) {
-			echo $_SESSION['noItem0'] . " items.";
-		}
-		?>
 	<h2> Welcome to the store! (TM) </h2>
 	<?php if(isset($_GET['itemsAdded'])){ echo "<p>" . $_GET['itemsAdded'] . " items added to cart </p>"; } ?>
 	<h4> Available items: </h4>
-	<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/2000px-Maple_Leaf.svg.png" alt="dank leaf" style="width:200; height:200;"> <br>
-	<form action = "shoppingcart.php" method = "post">
-	Number of cannadis: <input type="text" name="noItem0">
-	<input type = "submit"><br>
-	<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Linear_subspaces_with_shading.svg/2000px-Linear_subspaces_with_shading.svg.png" alt="trippin" style="width:200; height: 200"> <br>
-	<form action = "shoppingcart.php" method = "post">
-	Number of lines: <input type="text" name="noItem1">
-	<input type = "submit"> <br> <br>
+	<?php
+		$db->openConnection();
+		$products = $db->getProducts();
+		$_SESSION['products'] = $products;
+		$db->closeConnection();
+		$index = 0;
+		while($index < count($products)) {
+			echo "<img src='" . $products[$index]['Image_src'] . "' style='width:200;height:200;'> <br>";
+			echo "<form action='shoppingcart.php' method='post'> <br>";
+			echo "Number of " . $products[$index]['Prod_name'] . ": <input type='text' name='noItem" . $index . "'><input type='submit'><br>";
+			$index++;
+		}
+	?>
+	<br>
 	<a href = "checkout.php"> Go to checkout </a> <br>
-	<iframe src="//giphy.com/embed/xTiTnHXbRoaZ1B1Mo8" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 </body>
 </html>

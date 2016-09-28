@@ -138,14 +138,28 @@ class Database {
 		$sql = "SELECT Prod_id, Quantity FROM carts WHERE Username = ?";
 		$dbResult = $this->executeQuery($sql, array($userId));
 		$result = [];
+		$index = 0;
 		foreach($dbResult as $row) {
-			//array_push($result, $row['Quantity']);
-			$result[$row['Prod_id']] = $row['Quantity'];
+			$columns = array('Prod_id'=>$row['Prod_id'], 'Quantity'=>$row['Quantity']);
+			$result[$index] = $columns;
+			$index++;
 		}
 		return $result;
 	}
-	/*
-	 * *** Add functions ***
-	 */
+
+	public function emptyCart($userId) {
+		//TODO
+	}
+
+	public function getProducts() {
+		$sql = "SELECT * FROM products";
+		$dbResult = $this->executeQuery($sql);
+		$result = [];
+		foreach($dbResult as $row) {
+			$columns = array('Prod_name'=>$row['Prod_name'], 'Price'=>$row['Price'], 'Description'=>$row['Description'], 'Image_src'=>$row['Image_src']);
+			$result[$row['Prod_id']] = $columns;
+		}
+		return $result;
+	}
 }
 ?>

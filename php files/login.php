@@ -27,13 +27,13 @@
 	$cart = $db->getCart($username);
 	$db->closeConnection();
 	$index = 0;
-	while($index < 1) {
+	while($index < count($cart)) {
 		if(!empty($cart[$index])) {
-			$_SESSION['noItem' . $index] = $cart[$index];
+			$_SESSION['noItem' . $index] = $cart[$index]['Quantity'];
 		} else {
 			$_SESSION['noItem' . $index] = 0;
 		}
-		$index = $index+1;
+		$index++;
 	}
 	$_SESSION['db'] = $db;
 	$_SESSION['username'] = $username;
