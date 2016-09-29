@@ -9,6 +9,11 @@
     $cart = $db->getCart($username);
     $db->emptyCart($username);
     $db->closeConnection();
+    $index = 0;
+    while($index < count($products)) {
+      $_SESSION['noItem' . $index] = 0;
+      $index++;
+    }
   ?>
   <head></head>
   <body>

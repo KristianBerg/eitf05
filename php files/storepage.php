@@ -27,7 +27,6 @@
 		$db->openConnection();
 		$products = $db->getProducts();
 		$_SESSION['products'] = $products;
-		$_SESSION['nrOfProducts'] = count($products);
 		$db->closeConnection();
 		$index = 0;
 		while($index < count($products)) {

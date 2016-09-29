@@ -11,6 +11,12 @@
     <?php
     	require_once('database.inc.php');
       session_start();
+      if (isset($_SESSION['lastActivity']) && (time() - $_SESSION['lastActivity'] > 9000)) {
+    		// last request was more than X seconds ago
+    		session_unset();     // unset $_SESSION variable for the run-time
+    		session_destroy();   // destroy session data in storage
+    	}
+    	$_SESSION['lastActivity'] = time(); //Update last activity time stamp
       $username = $_SESSION['username'];
       $products = $_SESSION['products'];
       $db = $_SESSION['db'];
@@ -18,6 +24,11 @@
       $cart = $db->getCart($username);
       if(isset($_REQUEST['clear'])) {
         $db->emptyCart($username);
+        $index = 0;
+        while($index < count($products)) {
+          $_SESSION['noItem' . $index] = 0;
+          $index++;
+        }
         echo "Your cart is empty.";
         unset($_REQUEST['clear']);
       } else if(empty($cart)){
