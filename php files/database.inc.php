@@ -105,15 +105,28 @@ class Database {
 
 	/**
 	 * Check if a user with the specified user id exists in the database.
+	 * Get that users cool hashed password.
+	 * Compares that cool hashed password against the inputed clear text one.
+	 * (With the use of the standard PHP hash verify function, OFC).
 	 * Queries the Users database table.
 	 *
 	 * @param userId The user id
+	 * @param password The users inputed radical password
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId, $password) {
 		$sql = "SELECT Username FROM logins WHERE Username = ? AND Pass_hash = ?";
-		$result = $this->executeQuery($sql, array($userId, $password));
-		return count($result) == 1;
+		$sqlgetpass = "SELECT Pass_hash FROM logins WHERE Username = ?";
+		$result1 = $this->executeQuery($sqlgetpass, array($userId));
+		$hashedPass;
+		foreach ($result1 as $row){
+			$hashedPass = $row['Pass_hash'];
+		}
+		if (password_verify($password, $hashedPass)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function usernameExists($username) {
@@ -122,10 +135,13 @@ class Database {
 		return count($result) == 1;
 	}
 
+	/*
+		Vi hashar med PHP standard rekomenderade hash. Denna Autogenerar Salt men kan checkas genom en verify funktion
+	*/
 	public function registerUser($userId, $password, $address ){
-		$sql = "INSERT INTO logins VALUES(?, ?, ?, ?)";
-		$result = $this->executeUpdate($sql, array($userId, $address, $password, "salt"));
-		return count($result);
+		$sql = "INSERT INTO logins VALUES(?, ?, ?)";
+		$hashedPass = password_hash($password, PASSWORD_DEFAULT);
+		$result = $this->executeUpdate($sql, array($userId, $address, $hashedPass));
 	}
 
 	public function addToCart($userId, $item, $quantity) {

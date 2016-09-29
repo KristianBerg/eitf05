@@ -17,8 +17,7 @@ CREATE TABLE Products(
 CREATE TABLE Logins(
   Username VARCHAR(64),
   Useradress VARCHAR(255),
-  Pass_hash VARCHAR(64),
-  Salt VARCHAR(8),
+  Pass_hash VARCHAR(255),
   PRIMARY KEY(Username)
 );
 
