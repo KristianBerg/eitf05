@@ -4,7 +4,7 @@
   <body>
     <h2> Enter your card details </h2>
 
-    <form action="receipt.php">
+    <form action="receipt.php" method='post'>
     <fieldset>
       <legend>Payment information</legend>
         First name on card:<br>
@@ -13,8 +13,8 @@
         <input type="text" name="lastname" ><br>
         Card type: <br>
         <select name="cardtype">
-        <option value="volvo">VISA</option>
-        <option value="saab">MasterCard</option>
+        <option value="VISA">VISA</option>
+        <option value="MasterCard">MasterCard</option>
         </select><br>
         Card number:<br>
         <input type="text" name="cardnmbr" ><br>
