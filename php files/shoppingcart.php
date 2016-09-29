@@ -5,26 +5,19 @@
   $db = $_SESSION['db'];
   $db->openConnection();
   $username = $_SESSION['username'];
-
-  //Bör fixas så den ej är begränsad till 2 produkter.
-  if(!isset($_SESSION['noItem0'])){
-    $_SESSION['noItem0'] = 0;
-  }
-  if(!isset($_SESSION['noItem1'])){
-    $_SESSION['noItem1'] = 0;
-  }
-
+  $nrOfProducts = $_SESSION['nrOfProducts'];
+  $index = 0;
   $itemsAdded = 0;
-  if($_POST["noItem0"] > 0){
-    $_SESSION['noItem0'] = $_SESSION['noItem0'] + $_POST['noItem0'];
-    $itemsAdded = $_POST['noItem0'];
-    $_POST['noItem0'] = 0;
-    $db->addToCart($username, 0, $_SESSION['noItem0']);
-  } else if($_POST["noItem1"] > 0){
-    $_SESSION['noItem1'] = $_SESSION['noItem1'] + $_POST['noItem1'];
-    $itemsAdded = $_POST['noItem1'];
-    $_POST['noItem1'] = 0;
-    $db->addToCart($username, 1, $_SESSION['noItem1']);
+  while($index < $nrOfProducts) {
+    if(!isset($_SESSION['noItem' . $index])) {
+      $_SESSION['noItem' . $index] = 0;
+    } else if($_POST['noItem' . $index] > 0) {
+      $_SESSION['noItem' . $index] = $_SESSION['noItem' . $index] + $_POST['noItem' . $index];
+      $itemsAdded = $_POST['noItem'  . $index];
+      $_POST['noItem'  . $index] = 0;
+      $db->addToCart($username, $index, $_SESSION['noItem'  . $index]);
+    }
+    $index++;
   }
   $db->closeConnection();
   header('location: storepage.php?itemsAdded=' . $itemsAdded);

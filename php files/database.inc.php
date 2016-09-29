@@ -148,7 +148,8 @@ class Database {
 	}
 
 	public function emptyCart($userId) {
-		//TODO
+		$sql = "DELETE FROM carts WHERE Username = ?";
+		$this->executeUpdate($sql, array($userId));
 	}
 
 	public function getProducts() {

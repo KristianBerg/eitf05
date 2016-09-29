@@ -2,7 +2,7 @@
 	require_once('database.inc.php');
 
 	session_start();
-	if (isset($_SESSION['lastActivity']) && (time() - $_SESSION['lastActivity'] > 10)) {
+	if (isset($_SESSION['lastActivity']) && (time() - $_SESSION['lastActivity'] > 9000)) {
 		// last request was more than X seconds ago
 		session_unset();     // unset $_SESSION variable for the run-time
 		session_destroy();   // destroy session data in storage
@@ -27,6 +27,7 @@
 		$db->openConnection();
 		$products = $db->getProducts();
 		$_SESSION['products'] = $products;
+		$_SESSION['nrOfProducts'] = count($products);
 		$db->closeConnection();
 		$index = 0;
 		while($index < count($products)) {
