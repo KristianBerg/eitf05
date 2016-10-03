@@ -19,11 +19,24 @@
 
 	$username = $_REQUEST['username'];
 	$password = $_REQUEST['password'];
+	if($db->numberLogins($username) == -1) {
+		$db->closeConnection();
+		header("Location: index.php?userLocked=" . true);
+		exit();
+	}
 	if (!$db->userExists($username, $password)) {
+		if($db->usernameExists($username)){
+			if($db->numberLogins($username) > 5){
+				$db->blockUser($username);
+			} else {
+				$db->userFailedLogin($username);
+			}
+		}
 		$db->closeConnection();
 		header("Location: index.php?noSuchUser=" . true);
 		exit();
 	}
+	$db->resetUser($username); //Resets Login Counter "LoginAtempts"
 	$cart = $db->getCart($username);
 	$db->closeConnection();
 	$index = 0;

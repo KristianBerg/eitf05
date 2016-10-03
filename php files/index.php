@@ -22,7 +22,6 @@
 			echo "<br> We'll send a letter to your registered address with a reset code in 3-5 workdays.";
 
 		}
-	//echo $_SESSION["noSuchUser"];
 	?>
 </body>
 </html>

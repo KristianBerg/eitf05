@@ -117,7 +117,7 @@ class Database {
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId, $password) {
-		$sqlgetpass = "SELECT Pass_hash FROM logins WHERE Username = '" . $userId . "'";
+		$sqlgetpass = "SELECT Pass_hash FROM logins WHERE Username = '$userId'";
 		$result1 = $this->executeQuery($sqlgetpass);
 		$hashedPass;
 		foreach ($result1 as $row){
@@ -128,6 +128,31 @@ class Database {
 		} else {
 			return false;
 		}
+	}
+	
+	public function numberLogins($userId){
+		$sql = "SELECT LoginAtempts FROM logins WHERE Username = '$userId'";
+		$result = $this->executeQuery($sql);
+		$nbr;
+		foreach ($result as $row){
+			$nbr = $row['LoginAtempts'];
+		}
+		return $nbr;
+	}
+
+	public function blockUser($userId){
+		$sql2 = "UPDATE Logins SET LoginAtempts = -1 WHERE Username = '$userId'";
+		$this->executeUpdate($sql2);
+	}
+
+	public function userFailedLogin($userId){
+		$sql = "UPDATE Logins SET LoginAtempts = LoginAtempts + 1 WHERE Username = '$userId'";
+		$this->executeUpdate($sql);
+	}
+
+	public function resetUser($userId){
+		$sql2 = "UPDATE Logins SET LoginAtempts = 0 WHERE Username = '$userId'";
+		$this->executeUpdate($sql2);
 	}
 
 	public function usernameExists($username) {
@@ -141,18 +166,18 @@ class Database {
 	*/
 	public function registerUser($userId, $password, $address ){
 		$hashedPass = password_hash($password, PASSWORD_DEFAULT);
-		$sql = "INSERT INTO logins VALUES('" . $userId . "', '" . $address . "', '" . $hashedPass . "')";
+		$sql = "INSERT INTO logins VALUES('$userId', '$address', '$hashedPass')";
 		$result = $this->executeUpdate($sql);
 	}
 
 	public function addToCart($userId, $item, $quantity) {
-		$sql = "INSERT INTO carts VALUES((SELECT Username FROM logins WHERE Username = '" . $userId . "'), (SELECT Prod_id FROM products WHERE Prod_id = '" . $item . "'), '"
-		. $quantity . "') ON DUPLICATE KEY UPDATE Quantity = '" . $quantity . "'";
+		$sql = "INSERT INTO carts VALUES((SELECT Username FROM logins WHERE Username = '$userId'), (SELECT Prod_id FROM products WHERE Prod_id = '$item'), 
+		'$quantity') ON DUPLICATE KEY UPDATE Quantity = '$quantity'";
 		$this->executeUpdate($sql);
 	}
 
 	public function getCart($userId) {
-		$sql = "SELECT Prod_id, Quantity FROM carts WHERE Username = '" . $userId . "'";
+		$sql = "SELECT Prod_id, Quantity FROM carts WHERE Username = '$userId'";
 		$dbResult = $this->executeQuery($sql);
 		$result = [];
 		$index = 0;
@@ -165,7 +190,7 @@ class Database {
 	}
 
 	public function emptyCart($userId) {
-		$sql = "DELETE FROM carts WHERE Username = '" . $userId . "'";
+		$sql = "DELETE FROM carts WHERE Username = '$userId'";
 		$this->executeUpdate($sql);
 	}
 

@@ -17,8 +17,11 @@
 			echo "Session timed out...";
 		} else if(isset($_GET['registered']) and $_GET['registered'] == true) {
 			echo "New user registered.";
+		} else if(isset($_GET['userLocked']) and $_GET['userLocked'] == true) {
+			echo "This user has been locked.";
+			echo "<br> We'll send a letter to your registered address with a reset code in 3-5 workdays.";
+
 		}
-	//echo $_SESSION["noSuchUser"];
 	?>
 </body>
 </html>
