@@ -2,3 +2,4 @@
 - security issues related to server configuration
 - protection from XSS in safe version of site
 - write report
+- write instructions for setup

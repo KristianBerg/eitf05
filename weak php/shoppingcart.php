@@ -10,10 +10,10 @@
   while($index < $nrOfProducts) {
     if(!isset($_SESSION['noItem' . $index])) {
       $_SESSION['noItem' . $index] = 0;
-    } else if($_POST['noItem' . $index] > 0) {
-      $_SESSION['noItem' . $index] = $_SESSION['noItem' . $index] + $_POST['noItem' . $index];
-      $itemsAdded = $_POST['noItem'  . $index];
-      $_POST['noItem'  . $index] = 0;
+    } else if($_REQUEST['noItem' . $index] > 0) {
+      $_SESSION['noItem' . $index] = $_SESSION['noItem' . $index] + $_REQUEST['noItem' . $index];
+      $itemsAdded = $_REQUEST['noItem'  . $index];
+      $_REQUEST['noItem'  . $index] = 0;
       $db->addToCart($username, $index, $_SESSION['noItem'  . $index]);
     }
     $index++;
