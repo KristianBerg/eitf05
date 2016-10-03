@@ -34,6 +34,10 @@
 				} else {
 					echo "Passwords not matching.";
 				}
+<<<<<<< HEAD
+=======
+				echo "Passwords not matching.";
+>>>>>>> 91332001eeb3fc39a1331f6afcba84e6c8cf38e4
 			} else {
 				echo "Username already taken.";
 			}

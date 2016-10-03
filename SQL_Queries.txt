@@ -18,6 +18,7 @@ CREATE TABLE Logins(
   Username VARCHAR(64),
   Useradress VARCHAR(255),
   Pass_hash VARCHAR(255),
+  LoginAtempts INT,
   PRIMARY KEY(Username)
 );
 
