@@ -22,8 +22,9 @@
 			$password = $_POST['password'];
 			$password2 = $_POST['password2'];
 			$home_address = $_POST['home_address'];
-
-			if(!$db->usernameExists($username)) {
+			if (strpos($username, '<') !== FALSE || strpos($username, ';') !== FALSE) {
+				echo "Illegal character in username.";
+			} else if(!$db->usernameExists($username)) {
 				if(empty($password)) {
 					echo "All necessary fields not filled in.";
 				} else if($password === $password2) {

@@ -1,0 +1,33 @@
+Set up (Windows)
+
+1. Install WAMP Server (x86 if on 32-bit system and preferably but not necessarily x64 if on 64-bit system).
+
+2. Start WAMP Server and hopefully the taskbar icon will turn green.
+
+SETTING UP ALIASES:
+
+3. Left-click on the taskbar icon and then press Apache > Alias directories > Add and alias.
+
+4. A terminal window will appear, input "store" on the first question. Input location of the git folder, 
+for example "C:\Users\Name\Desktop\eitf05\php files".
+
+5. Repeat step 3 and 4 but change the inputs in step 4 to "weakStore" and the second should end with "\weak php" instead of "\php files".
+
+SETTING UP THE SQL DATABASE:
+
+6. Open up a browser of your choice and write "localhost/phpmyadmin" in address field.
+
+7. Log in with username "root" and leave the password field empty.
+
+8. Press the "new" database in the toolbar containing a list of databases on the left-hand side to create a new database, name it "eitf05".
+
+9. Tab back to the git main folder and open the file "SQL_Queries.txt", copy everything by pressing first "ctrl+a" and then "ctrl+c".
+
+10. Tab back to the browser, press the "eitf05" located directly underneath "new" in the list of databases.
+
+11. Press the SQL tab in the top middle of the window. Paste the SQL queries into the big text field by pressing "ctrl+v" 
+and then press the "Go" button below the text field on the right.
+
+ENJOYING THE SITE:
+
+12. The site should now be up and running. Head over there by writing "localhost/store" or "localhost/weakStore" and sign up!
