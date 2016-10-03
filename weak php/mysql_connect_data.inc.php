@@ -2,5 +2,5 @@
 	$host = "localhost";
 	$userName = "root";
 	$password = "";
-	$database = "eitf05";
+	$database = "eitf05_weak";
 ?>
