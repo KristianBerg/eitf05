@@ -71,7 +71,7 @@ class Database {
 	 * @param $param Array with parameters
 	 * @return The result set
 	 */
-	private function executeQuery($query, $param = null) {
+	private function executeQuery($query) {
 		try {
 			$stmt = $this->conn->query($query);
 			// $stmt = $this->conn->prepare($query);
@@ -91,7 +91,7 @@ class Database {
 	 * @param $param Array with parameters
 	 * @return The number of affected rows
 	 */
-	private function executeUpdate($query, $param = null) {
+	private function executeUpdate($query) {
 		$affectedRows = 0;
 		try{
 			$stmt = $this->conn->query($query);
@@ -131,7 +131,7 @@ class Database {
 	}
 
 	public function usernameExists($username) {
-		$sql = "SELECT Username FROM logins WHERE Username = '" . $username . "'";
+		$sql = "SELECT Username FROM logins WHERE Username = '$username'";
 		$result = $this->executeQuery($sql);
 		return count($result) == 1;
 	}
