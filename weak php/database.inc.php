@@ -71,10 +71,11 @@ class Database {
 	 * @param $param Array with parameters
 	 * @return The result set
 	 */
-	private function executeQuery($query, $param = null) {
+	private function executeQuery($query) {
 		try {
-			$stmt = $this->conn->prepare($query);
-			$stmt->execute($param);
+			$stmt = $this->conn->query($query);
+			// $stmt = $this->conn->prepare($query);
+			// $stmt->execute($param);
 			$result = $stmt->fetchAll();
 		} catch (PDOException $e) {
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
@@ -90,11 +91,12 @@ class Database {
 	 * @param $param Array with parameters
 	 * @return The number of affected rows
 	 */
-	private function executeUpdate($query, $param = null) {
+	private function executeUpdate($query) {
 		$affectedRows = 0;
 		try{
-			$stmt = $this->conn->prepare($query);
-			$stmt->execute($param);
+			$stmt = $this->conn->query($query);
+			// $stmt = $this->conn->prepare($query);
+			// $stmt->execute($param);
 			$rows = $stmt->rowCount();
 		} catch(PDOException $e){
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
@@ -115,9 +117,8 @@ class Database {
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId, $password) {
-		$sql = "SELECT Username FROM logins WHERE Username = ? AND Pass_hash = ?";
-		$sqlgetpass = "SELECT Pass_hash FROM logins WHERE Username = ?";
-		$result1 = $this->executeQuery($sqlgetpass, array($userId));
+		$sqlgetpass = "SELECT Pass_hash FROM logins WHERE Username = '" . $userId . "'";
+		$result1 = $this->executeQuery($sqlgetpass);
 		$hashedPass;
 		foreach ($result1 as $row){
 			$hashedPass = $row['Pass_hash'];
@@ -130,8 +131,8 @@ class Database {
 	}
 
 	public function usernameExists($username) {
-		$sql = "SELECT Username FROM logins WHERE Username = ?";
-		$result = $this->executeQuery($sql, array($username));
+		$sql = "SELECT Username FROM logins WHERE Username = '$username'";
+		$result = $this->executeQuery($sql);
 		return count($result) == 1;
 	}
 
@@ -139,20 +140,20 @@ class Database {
 		Vi hashar med PHP standard rekomenderade hash. Denna Autogenerar Salt men kan checkas genom en verify funktion
 	*/
 	public function registerUser($userId, $password, $address ){
-		$sql = "INSERT INTO logins VALUES(?, ?, ?)";
 		$hashedPass = password_hash($password, PASSWORD_DEFAULT);
-		$result = $this->executeUpdate($sql, array($userId, $address, $hashedPass));
+		$sql = "INSERT INTO logins VALUES('" . $userId . "', '" . $address . "', '" . $hashedPass . "')";
+		$result = $this->executeUpdate($sql);
 	}
 
 	public function addToCart($userId, $item, $quantity) {
-		$sql = "INSERT INTO carts VALUES((SELECT Username FROM logins WHERE Username = ?), (SELECT Prod_id FROM products WHERE Prod_id = ?), ?)
-			ON DUPLICATE KEY UPDATE Quantity = ?";
-		$this->executeUpdate($sql, array($userId, $item, $quantity, $quantity));
+		$sql = "INSERT INTO carts VALUES((SELECT Username FROM logins WHERE Username = '" . $userId . "'), (SELECT Prod_id FROM products WHERE Prod_id = '" . $item . "'), '"
+		. $quantity . "') ON DUPLICATE KEY UPDATE Quantity = '" . $quantity . "'";
+		$this->executeUpdate($sql);
 	}
 
 	public function getCart($userId) {
-		$sql = "SELECT Prod_id, Quantity FROM carts WHERE Username = ?";
-		$dbResult = $this->executeQuery($sql, array($userId));
+		$sql = "SELECT Prod_id, Quantity FROM carts WHERE Username = '" . $userId . "'";
+		$dbResult = $this->executeQuery($sql);
 		$result = [];
 		$index = 0;
 		foreach($dbResult as $row) {
@@ -164,8 +165,8 @@ class Database {
 	}
 
 	public function emptyCart($userId) {
-		$sql = "DELETE FROM carts WHERE Username = ?";
-		$this->executeUpdate($sql, array($userId));
+		$sql = "DELETE FROM carts WHERE Username = '" . $userId . "'";
+		$this->executeUpdate($sql);
 	}
 
 	public function getProducts() {

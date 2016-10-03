@@ -115,7 +115,6 @@ class Database {
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId, $password) {
-		$sql = "SELECT Username FROM logins WHERE Username = ? AND Pass_hash = ?";
 		$sqlgetpass = "SELECT Pass_hash FROM logins WHERE Username = ?";
 		$result1 = $this->executeQuery($sqlgetpass, array($userId));
 		$hashedPass;
@@ -129,6 +128,31 @@ class Database {
 		}
 	}
 
+	public function numberLogins($userId){
+		$sql = "SELECT LoginAtempts FROM logins WHERE Username = ?";
+		$result = $this->executeQuery($sql, array($userId));
+		$nbr;
+		foreach ($result as $row){
+			$nbr = $row['LoginAtempts'];
+		}
+		return $nbr;
+	}
+
+	public function blockUser($userId){
+		$sql2 = "UPDATE Logins SET LoginAtempts = -1 WHERE Username = ?";
+		$this->executeUpdate($sql2, array($userId));
+	}
+
+	public function userFailedLogin($userId){
+		$sql = "UPDATE Logins SET LoginAtempts = LoginAtempts + 1 WHERE Username = ?";
+		$this->executeUpdate($sql, array($userId));
+	}
+
+	public function resetUser($userId){
+		$sql2 = "UPDATE Logins SET LoginAtempts = 0 WHERE Username = ?";
+		$this->executeUpdate($sql2, array($userId));
+	}
+
 	public function usernameExists($username) {
 		$sql = "SELECT Username FROM logins WHERE Username = ?";
 		$result = $this->executeQuery($sql, array($username));
@@ -139,9 +163,9 @@ class Database {
 		Vi hashar med PHP standard rekomenderade hash. Denna Autogenerar Salt men kan checkas genom en verify funktion
 	*/
 	public function registerUser($userId, $password, $address ){
-		$sql = "INSERT INTO logins VALUES(?, ?, ?)";
+		$sql = "INSERT INTO logins VALUES(?, ?, ?, ?)";
 		$hashedPass = password_hash($password, PASSWORD_DEFAULT);
-		$result = $this->executeUpdate($sql, array($userId, $address, $hashedPass));
+		$result = $this->executeUpdate($sql, array($userId, $address, $hashedPass, 0));
 	}
 
 	public function addToCart($userId, $item, $quantity) {
