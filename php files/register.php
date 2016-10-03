@@ -9,20 +9,20 @@
 		Home address: <input type="text" name="home_address"><br>
 		<input type="submit" value="Register">
 	</form>
-	<?php 
+	<?php
 		require_once('database.inc.php');
-		
+
 		session_start();
-		
+
 		if(isset($_POST['username'])){
 			$db = $_SESSION['db'];
 			$db->openConnection();
-			
+
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			$password2 = $_POST['password2'];
 			$home_address = $_POST['home_address'];
-			
+
 			if(!$db->usernameExists($username)) {
 				if($password === $password2) {
 					$db->registerUser($username, $password, $home_address);
@@ -30,10 +30,10 @@
 					header("Location: index.php?registered=" . true);
 					exit();
 				}
-				echo "Passwords not matching.";	
+				echo "Passwords not matching.";
 			} else {
 				echo "Username already taken.";
-			}	
+			}
 			$db->closeConnection();
 		}
 	?>
