@@ -1,10 +1,4 @@
-- fix last functionality issues, product db and receipt.php //Jacob
-- create self-signed ssl certificate
-- use said certificate to make ssl connection
-- secure login from bruteforce
-- hashing and salting stored passwords //Joakim
-- security issues related to PHP, server configuration and protection from attacks
-- php.ini //Kristian
-- Implementing Cross-Site Scripting (XSS)
-- Implementing Cross-Site Request Forgery (CSRF)
-- Implementing SQL injection
+- use selfsigned certificate to make ssl connection
+- security issues related to server configuration
+- protection from XSS in safe version of site
+- write report
