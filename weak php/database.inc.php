@@ -164,9 +164,9 @@ class Database {
 	/*
 		Vi hashar med PHP standard rekomenderade hash. Denna Autogenerar Salt men kan checkas genom en verify funktion
 	*/
-	public function registerUser($userId, $password, $address ){
+	public function registerUser($userId, $password, $address){
 		$hashedPass = password_hash($password, PASSWORD_DEFAULT);
-		$sql = "INSERT INTO logins VALUES('$userId', '$address', '$hashedPass')";
+		$sql = "INSERT INTO logins VALUES('$userId', '$address', '$hashedPass', 0)";
 		$result = $this->executeUpdate($sql);
 	}
 
