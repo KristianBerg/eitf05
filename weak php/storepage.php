@@ -18,7 +18,7 @@
 ?>
 
 <html>
-<head><?php echo "<h3>" . $username . "</h3>" ?></head>
+<head><?php echo "<h3>'$username'</h3>" ?></head>
 <body>
 	<h2> Welcome to the store! (TM) </h2>
 	<?php if(isset($_GET['itemsAdded'])){ echo "<p>" . $_GET['itemsAdded'] . " items added to cart </p>"; } ?>
