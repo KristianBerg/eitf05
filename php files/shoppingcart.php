@@ -10,7 +10,8 @@
   while($index < $nrOfProducts) {
     if(!isset($_SESSION['noItem' . $index])) {
       $_SESSION['noItem' . $index] = 0;
-    } else if($_POST['noItem' . $index] > 0) {
+    }
+    if($_POST['noItem' . $index] > 0) {
       $_SESSION['noItem' . $index] = $_SESSION['noItem' . $index] + $_POST['noItem' . $index];
       $itemsAdded = $_POST['noItem'  . $index];
       $_POST['noItem'  . $index] = 0;

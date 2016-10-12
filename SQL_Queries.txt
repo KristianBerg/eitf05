@@ -33,5 +33,3 @@ CREATE TABLE carts (
 
 INSERT INTO products VALUES(0, "Cannadis", 50, "...", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/2000px-Maple_Leaf.svg.png");
 INSERT INTO products VALUES(1, "Lines", 100, "...", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Linear_subspaces_with_shading.svg/2000px-Linear_subspaces_with_shading.svg.png");
-
-OBS! Databasens namn ska vara "eitf05".

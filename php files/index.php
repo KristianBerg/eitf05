@@ -11,6 +11,7 @@
 	</form>
 	<?php
 		session_start();
+		session_destroy();
 		if(isset($_GET['noSuchUser']) && $_GET['noSuchUser'] == true){
 			echo "No such user was found.";
 		} else if(isset($_GET['timeout']) and $_GET['timeout'] == true) {
@@ -22,7 +23,6 @@
 			echo "<br> We'll send a letter to your registered address with a reset code in 3-5 workdays.";
 
 		}
-	//echo $_SESSION["noSuchUser"];
 	?>
 </body>
 </html>

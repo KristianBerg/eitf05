@@ -11,14 +11,18 @@
 	</form>
 	<?php
 		session_start();
+		session_destroy();
 		if(isset($_GET['noSuchUser']) && $_GET['noSuchUser'] == true){
 			echo "No such user was found.";
 		} else if(isset($_GET['timeout']) and $_GET['timeout'] == true) {
 			echo "Session timed out...";
 		} else if(isset($_GET['registered']) and $_GET['registered'] == true) {
 			echo "New user registered.";
+		} else if(isset($_GET['userLocked']) and $_GET['userLocked'] == true) {
+			echo "This user has been locked.";
+			echo "<br> We'll send a letter to your registered address with a reset code in 3-5 workdays.";
+
 		}
-	//echo $_SESSION["noSuchUser"];
 	?>
 </body>
 </html>
