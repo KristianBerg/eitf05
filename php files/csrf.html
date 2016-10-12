@@ -1,0 +1,43 @@
+<script>
+// Let's create the iFrame used to send our data
+var iframe = document.createElement("iframe");
+iframe.name = "myTarget";
+
+// Next, attach the iFrame to the main document
+window.addEventListener("load", function () {
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+  sendData({"noItem1": '2'});
+});
+
+// This is the function used to actually send the data
+// It takes one parameter, which is an object populated with key/value pairs.
+function sendData(data) {
+  var name,
+      form = document.createElement("form"),
+      node = document.createElement("input");
+
+  // Define what should happen when the response is loaded
+  iframe.addEventListener("load", function () {
+    alert("Yeah! Data sent.");
+  });
+    
+  form.action = "https://identity-rp:12444/store/storepage.php";
+  form.target = iframe.name;
+
+  for(name in data) {
+    node.name  = name;
+    node.value = data[name].toString();
+    form.appendChild(node.cloneNode());
+  }
+
+  // To be sent, the form needs to be attached to the main document.
+  form.style.display = "none";
+  document.body.appendChild(form);
+
+  form.submit();
+
+  // But once the form is sent, it's useless to keep it.
+  document.body.removeChild(form);
+}
+</script>
