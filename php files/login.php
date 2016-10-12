@@ -50,6 +50,7 @@
 	}
 	$_SESSION['db'] = $db;
 	$_SESSION['username'] = $username;
+	$_SESSION['csrftoken'] = rand();
 	header("Location: storepage.php");
 	exit();
 ?>

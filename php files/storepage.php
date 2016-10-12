@@ -33,7 +33,8 @@
 		while($index < count($products)) {
 			echo "<img src='" . $products[$index]['Image_src'] . "' style='width:200;height:200;'> <br>";
 			echo "<form action='shoppingcart.php' method='post'> <br>";
-			echo "Number of " . $products[$index]['Prod_name'] . ": <input type='text' name='noItem" . $index . "'><input type='submit'><br>";
+			echo "Number of " . $products[$index]['Prod_name'] . ": <input type='text' name='noItem" . $index . "'>";
+			echo "<input type = 'hidden' name = 'token' value = " . $_SESSION['csrftoken'] . "><input type='submit'><br>";
 			$index++;
 		}
 	?>

@@ -1,6 +1,12 @@
+<script> alert("fuck") </script>
 <?php
   require_once("database.inc.php");
   session_start();
+  if(!isset($_POST['token']) || $_POST['token'] != $_SESSION['csrftoken']){
+    unset($_POST['token']);
+    header('location: storepage.php?itemsAdded=0');
+    exit();
+  }
   $db = $_SESSION['db'];
   $db->openConnection();
   $username = $_SESSION['username'];
